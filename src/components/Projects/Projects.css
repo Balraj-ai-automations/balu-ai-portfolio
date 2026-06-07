@@ -1,0 +1,330 @@
+/* ============================================================
+   Projects Section — CLASSIFIED OPERATIONS
+   Locked/Unlocked mission file cards
+   ============================================================ */
+
+.projects {
+  padding: var(--section-padding);
+  position: relative;
+}
+
+.projects .container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--container-padding);
+}
+
+.projects__header {
+  margin-bottom: 48px;
+}
+
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 32px;
+}
+
+/* ── Project Card ── */
+.project-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  min-height: 340px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(124, 58, 237, 0.1);
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  z-index: 2;
+}
+
+/* ── LOCKED State ── */
+.project-card__locked {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  z-index: 2;
+  background: var(--bg-secondary);
+  padding: 32px;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.project-card__locked--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.project-card__classified-label {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.project-card__redacted-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 80%;
+}
+
+.project-card__redacted-bar {
+  height: 10px;
+  background: var(--bg-card);
+  border-radius: 2px;
+}
+
+.project-card__redacted-bar:nth-child(1) { width: 90%; }
+.project-card__redacted-bar:nth-child(2) { width: 70%; }
+.project-card__redacted-bar:nth-child(3) { width: 80%; }
+.project-card__redacted-bar:nth-child(4) { width: 50%; }
+
+.project-card__declassify-btn {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 10px 28px;
+  color: var(--accent-light);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: pulse-glow 2s ease-in-out infinite;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.project-card__declassify-btn:hover {
+  background: var(--accent);
+  color: var(--text-primary);
+}
+
+/* ── UNLOCKED State ── */
+.project-card__unlocked {
+  padding: 28px 24px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.8;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.3s;
+}
+
+.project-card__unlocked--visible {
+  opacity: 1;
+}
+
+.project-card__declassified-header {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.project-card__declassified-header span {
+  color: var(--accent-light);
+}
+
+.project-card__codename {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ── Field Rows ── */
+.project-card__field {
+  margin-bottom: 12px;
+}
+
+.project-card__field-label {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.project-card__field-value {
+  color: var(--text-secondary);
+}
+
+/* ── Highlights List ── */
+.project-card__highlights {
+  padding-left: 16px;
+}
+
+.project-card__highlight-item {
+  color: var(--text-secondary);
+  padding: 2px 0;
+  position: relative;
+  padding-left: 16px;
+}
+
+.project-card__highlight-item::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* ── Stack Badges ── */
+.project-card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.project-card__stack-pill {
+  display: inline-block;
+  background: var(--accent-subtle);
+  color: var(--accent-light);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+
+/* ── Complexity Bar ── */
+.project-card__complexity-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-card);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.project-card__complexity-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light));
+  border-radius: 4px;
+  transition: width 1.2s ease-out 0.5s;
+  width: 0%;
+}
+
+.project-card__complexity-fill--animate {
+  /* width is set inline via style */
+}
+
+.project-card__complexity-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-card__complexity-value {
+  color: var(--accent-light);
+  font-weight: 700;
+}
+
+/* ── Status Badge ── */
+.project-card__status {
+  margin-top: 4px;
+}
+
+.project-card__status-badge {
+  display: inline-block;
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 4px 12px;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ── Action Buttons ── */
+.project-card__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.project-card__action-btn {
+  flex: 1;
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.project-card__action-btn--primary {
+  background: var(--accent);
+  color: var(--text-primary);
+  border: 1px solid var(--accent);
+}
+
+.project-card__action-btn--primary:hover {
+  background: var(--accent-dark);
+  color: var(--text-primary);
+}
+
+.project-card__action-btn--secondary {
+  background: transparent;
+  color: var(--accent-light);
+  border: 1px solid var(--border);
+}
+
+.project-card__action-btn--secondary:hover {
+  border-color: var(--accent);
+  background: var(--accent-subtle);
+  color: var(--accent-light);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .projects {
+    padding: var(--section-padding-mobile);
+  }
+
+  .projects__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card__unlocked {
+    padding: 20px 16px;
+    font-size: 0.76rem;
+  }
+
+  .project-card__actions {
+    flex-direction: column;
+  }
+}

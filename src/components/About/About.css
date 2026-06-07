@@ -1,0 +1,293 @@
+/* ============================================================
+   About Section — CORE IDENTITY
+   Split-screen: Terminal (60%) | 3D Cube + Bio (40%)
+   ============================================================ */
+
+.about {
+  padding: var(--section-padding);
+  position: relative;
+}
+
+.about .container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--container-padding);
+}
+
+.about__header {
+  margin-bottom: 48px;
+}
+
+.about__layout {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+/* ── Left: Terminal Block (60%) ── */
+.about__terminal-side {
+  flex: 0 0 58%;
+  max-width: 58%;
+}
+
+.about__terminal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  position: relative;
+  overflow: hidden;
+}
+
+.about__terminal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.about__terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(124, 58, 237, 0.08);
+  border-bottom: 1px solid var(--border);
+}
+
+.about__terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.about__terminal-dot--red { background: #ef4444; }
+.about__terminal-dot--yellow { background: #f59e0b; }
+.about__terminal-dot--green { background: #22c55e; }
+
+.about__terminal-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-left: 8px;
+  letter-spacing: 1px;
+}
+
+.about__terminal-body {
+  padding: 24px 20px;
+}
+
+.about__terminal-line {
+  margin-bottom: 6px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.about__terminal-line--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about__terminal-prompt {
+  color: var(--accent);
+  margin-right: 8px;
+  user-select: none;
+}
+
+.about__terminal-command {
+  color: var(--text-terminal);
+}
+
+.about__terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--accent);
+  margin-left: 4px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+
+/* ── Right: 3D Cube + Bio (40%) ── */
+.about__bio-side {
+  flex: 0 0 38%;
+  max-width: 38%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+}
+
+/* ── CSS 3D Rotating Cube ── */
+.cube-scene {
+  width: 180px;
+  height: 180px;
+  perspective: 600px;
+  perspective-origin: 50% 50%;
+  margin: 20px auto;
+}
+
+.cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: cube-rotate 12s linear infinite;
+}
+
+@keyframes cube-rotate {
+  0%   { transform: rotateX(-20deg) rotateY(0deg); }
+  25%  { transform: rotateX(10deg) rotateY(90deg); }
+  50%  { transform: rotateX(-15deg) rotateY(180deg); }
+  75%  { transform: rotateX(5deg) rotateY(270deg); }
+  100% { transform: rotateX(-20deg) rotateY(360deg); }
+}
+
+.cube__face {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  /* Solid dark face with violet tint */
+  background: linear-gradient(
+    135deg,
+    rgba(91, 33, 182, 0.25) 0%,
+    rgba(10, 10, 10, 0.92) 50%,
+    rgba(91, 33, 182, 0.15) 100%
+  );
+
+  /* Black-shaded edges via inset shadow + border */
+  border: 2px solid #000000;
+  box-shadow:
+    inset 0 0 30px rgba(0, 0, 0, 0.8),
+    inset 0 0 8px rgba(124, 58, 237, 0.3),
+    0 0 6px rgba(0, 0, 0, 0.6);
+
+  backface-visibility: visible;
+}
+
+.cube__face--front  { transform: translateZ(90px); }
+.cube__face--back   { transform: rotateY(180deg) translateZ(90px); }
+.cube__face--right  { transform: rotateY(90deg) translateZ(90px); }
+.cube__face--left   { transform: rotateY(-90deg) translateZ(90px); }
+.cube__face--top    { transform: rotateX(90deg) translateZ(90px); }
+.cube__face--bottom { transform: rotateX(-90deg) translateZ(90px); }
+
+.cube__icon {
+  font-size: 2rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.5));
+}
+
+.cube__label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-light);
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px var(--accent-glow);
+}
+
+.cube__subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Hover: pause rotation */
+.cube-scene:hover .cube {
+  animation-play-state: paused;
+}
+
+/* ── Bio Text ── */
+.about__bio-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.about__bio-paragraph {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  text-align: center;
+}
+
+.about__bio-paragraph:last-child {
+  color: var(--accent-light);
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .about {
+    padding: var(--section-padding-mobile);
+  }
+
+  .about__layout {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .about__terminal-side,
+  .about__bio-side {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .cube-scene {
+    width: 140px;
+    height: 140px;
+  }
+
+  .cube__face {
+    width: 140px;
+    height: 140px;
+  }
+
+  .cube__face--front  { transform: translateZ(70px); }
+  .cube__face--back   { transform: rotateY(180deg) translateZ(70px); }
+  .cube__face--right  { transform: rotateY(90deg) translateZ(70px); }
+  .cube__face--left   { transform: rotateY(-90deg) translateZ(70px); }
+  .cube__face--top    { transform: rotateX(90deg) translateZ(70px); }
+  .cube__face--bottom { transform: rotateX(-90deg) translateZ(70px); }
+
+  .cube__icon {
+    font-size: 1.5rem;
+  }
+
+  .cube__label {
+    font-size: 0.9rem;
+  }
+
+  .about__terminal-line {
+    white-space: normal;
+  }
+
+  .about__terminal-body {
+    padding: 16px 14px;
+  }
+
+  .about__terminal {
+    font-size: 0.75rem;
+  }
+}

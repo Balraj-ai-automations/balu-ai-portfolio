@@ -1,0 +1,239 @@
+/* ============================================================
+   Experience Section — DEPLOYMENT LOG
+   Terminal-style log blocks with scroll-reveal
+   ============================================================ */
+
+.experience {
+  padding: var(--section-padding);
+  position: relative;
+}
+
+.experience .container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--container-padding);
+}
+
+.experience__header {
+  margin-bottom: 48px;
+}
+
+.experience__list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Log Block ── */
+.experience__block {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: 28px 24px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.experience__block--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.experience__block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+/* ── Period Header ── */
+.experience__period {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+.experience__status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.experience__status-dot--active {
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success-glow);
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+.experience__status-dot--complete {
+  background: var(--success);
+}
+
+.experience__company {
+  color: var(--accent-light);
+}
+
+/* ── Field Rows ── */
+.experience__field {
+  margin-bottom: 4px;
+  color: var(--text-secondary);
+  padding-left: 22px;
+}
+
+.experience__field-label {
+  color: var(--text-muted);
+  margin-right: 8px;
+}
+
+.experience__field-value {
+  color: var(--text-secondary);
+}
+
+/* ── Systems Badges ── */
+.experience__systems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding-left: 22px;
+}
+
+.experience__systems-label {
+  color: var(--text-muted);
+  margin-right: 8px;
+  padding-left: 22px;
+  margin-bottom: 4px;
+}
+
+.experience__system-pill {
+  display: inline-block;
+  background: var(--accent-subtle);
+  color: var(--accent-light);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 12px;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+
+/* ── Status Row ── */
+.experience__status-row {
+  padding-left: 22px;
+  margin-top: 8px;
+}
+
+.experience__status-badge {
+  font-weight: 700;
+}
+
+.experience__status-badge--active {
+  color: var(--success);
+}
+
+.experience__status-badge--complete {
+  color: var(--success);
+}
+
+/* ── Expand Toggle ── */
+.experience__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 6px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-light);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  letter-spacing: 1px;
+}
+
+.experience__toggle:hover {
+  border-color: var(--accent);
+  background: var(--accent-subtle);
+}
+
+.experience__toggle-arrow {
+  display: inline-block;
+  transition: transform var(--transition-fast);
+}
+
+.experience__toggle-arrow--open {
+  transform: rotate(90deg);
+}
+
+/* ── Details Panel ── */
+.experience__details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding-left: 22px;
+}
+
+.experience__details--open {
+  max-height: 500px;
+  padding-top: 12px;
+}
+
+.experience__detail-item {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  padding: 4px 0;
+  padding-left: 16px;
+  position: relative;
+}
+
+.experience__detail-item::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .experience {
+    padding: var(--section-padding-mobile);
+  }
+
+  .experience__block {
+    padding: 20px 16px;
+    font-size: 0.78rem;
+  }
+
+  .experience__period {
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .experience__field,
+  .experience__systems-label,
+  .experience__status-row {
+    padding-left: 0;
+  }
+
+  .experience__systems {
+    padding-left: 0;
+  }
+}

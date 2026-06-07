@@ -1,0 +1,228 @@
+/* ============================================================
+   BootSequence — Full-screen terminal boot overlay
+   ============================================================ */
+
+.boot-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-boot);
+  background-color: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+.boot-overlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* CRT Scanline overlay */
+.boot-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.015) 0px,
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Subtle moving scanline */
+.boot-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(124, 58, 237, 0.08);
+  animation: scanline 4s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.boot-terminal {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+  color: var(--text-primary);
+  max-width: 620px;
+  width: 90%;
+  padding: 32px;
+  line-height: 2;
+}
+
+.boot-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  min-height: 1.8em;
+}
+
+.boot-line .prefix {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.boot-line .text {
+  color: var(--text-primary);
+}
+
+.boot-line .check {
+  color: var(--success);
+  flex-shrink: 0;
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.boot-line .check.visible {
+  opacity: 1;
+}
+
+/* Cursor blink for currently typing line */
+.boot-line .cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.1em;
+  background: var(--accent);
+  animation: blink 0.8s step-end infinite;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+/* Progress bar */
+.boot-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 1.8em;
+  margin-top: 4px;
+}
+
+.boot-progress-container .prefix {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.boot-progress-bar {
+  width: 260px;
+  height: 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.boot-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light));
+  width: 0%;
+  transition: width 0.05s linear;
+  border-radius: 1px;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.boot-progress-text {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  min-width: 40px;
+}
+
+/* Status lines */
+.boot-status-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 1.8em;
+}
+
+.boot-status-line .prefix {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.boot-status-line .label {
+  color: var(--text-secondary);
+}
+
+.boot-status-line .value {
+  color: var(--text-primary);
+}
+
+.boot-status-line .value.granted {
+  color: var(--success);
+  font-weight: 700;
+}
+
+/* Enter button */
+.boot-enter-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  min-height: 56px;
+}
+
+.boot-enter-btn {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--accent);
+  padding: 14px 40px;
+  cursor: none;
+  transition: background 0.3s ease, color 0.3s ease;
+  animation: pulse-glow 2s ease-in-out infinite;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.boot-enter-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
+}
+
+.boot-enter-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (hover: none) {
+  .boot-enter-btn {
+    cursor: pointer;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .boot-terminal {
+    padding: 20px;
+    font-size: 0.7rem;
+  }
+
+  .boot-progress-bar {
+    width: 160px;
+    height: 12px;
+  }
+
+  .boot-enter-btn {
+    font-size: 0.85rem;
+    padding: 12px 28px;
+  }
+}
