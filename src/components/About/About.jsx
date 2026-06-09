@@ -3,12 +3,12 @@ import { aboutData } from '../../data/portfolio-data';
 import './About.css';
 
 const CUBE_FACES = [
-  { label: 'AI', icon: '🧠', subtitle: 'ENGINE' },
-  { label: 'RAG', icon: '📄', subtitle: 'RETRIEVAL' },
-  { label: 'API', icon: '⚡', subtitle: 'BACKEND' },
-  { label: '</>', icon: '💻', subtitle: 'FRONTEND' },
-  { label: 'AUTO', icon: '🤖', subtitle: 'AGENTS' },
-  { label: 'SHIP', icon: '🚀', subtitle: 'DEPLOY' },
+  { label: '{.ai}', subtitle: 'NEURAL ENGINE' },
+  { label: '[.rag]', subtitle: 'RETRIEVAL' },
+  { label: '//api', subtitle: 'BACKEND' },
+  { label: '<.dev>', subtitle: 'FRONTEND' },
+  { label: '>_vibe', subtitle: 'VIBE CODER' },
+  { label: '$ deploy', subtitle: 'PRODUCTION' },
 ];
 
 export default function About() {
@@ -79,32 +79,26 @@ export default function About() {
             <div className="cube-scene">
               <div className="cube">
                 <div className="cube__face cube__face--front">
-                  <span className="cube__icon">{CUBE_FACES[0].icon}</span>
                   <span className="cube__label">{CUBE_FACES[0].label}</span>
                   <span className="cube__subtitle">{CUBE_FACES[0].subtitle}</span>
                 </div>
                 <div className="cube__face cube__face--back">
-                  <span className="cube__icon">{CUBE_FACES[1].icon}</span>
                   <span className="cube__label">{CUBE_FACES[1].label}</span>
                   <span className="cube__subtitle">{CUBE_FACES[1].subtitle}</span>
                 </div>
                 <div className="cube__face cube__face--right">
-                  <span className="cube__icon">{CUBE_FACES[2].icon}</span>
                   <span className="cube__label">{CUBE_FACES[2].label}</span>
                   <span className="cube__subtitle">{CUBE_FACES[2].subtitle}</span>
                 </div>
                 <div className="cube__face cube__face--left">
-                  <span className="cube__icon">{CUBE_FACES[3].icon}</span>
                   <span className="cube__label">{CUBE_FACES[3].label}</span>
                   <span className="cube__subtitle">{CUBE_FACES[3].subtitle}</span>
                 </div>
                 <div className="cube__face cube__face--top">
-                  <span className="cube__icon">{CUBE_FACES[4].icon}</span>
                   <span className="cube__label">{CUBE_FACES[4].label}</span>
                   <span className="cube__subtitle">{CUBE_FACES[4].subtitle}</span>
                 </div>
                 <div className="cube__face cube__face--bottom">
-                  <span className="cube__icon">{CUBE_FACES[5].icon}</span>
                   <span className="cube__label">{CUBE_FACES[5].label}</span>
                   <span className="cube__subtitle">{CUBE_FACES[5].subtitle}</span>
                 </div>

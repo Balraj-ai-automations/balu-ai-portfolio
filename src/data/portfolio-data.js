@@ -19,13 +19,14 @@ export const aboutData = {
     { command: 'framework.load("LangChain", "FastAPI", "React")', delay: 800 },
     { command: 'deployment.first = "Decoda"', delay: 1200 },
     { command: 'career.focus = "AI_AGENTS | AUTOMATION | RAG"', delay: 1600 },
-    { command: 'status = "seeking_new_mission"', delay: 2000 },
+    { command: 'dev.mode = "VIBE_CODER"', delay: 2000 },
+    { command: 'status = "seeking_new_mission"', delay: 2400 },
   ],
   humanText: [
     "I'm an AI Developer passionate about building intelligent products that solve real-world problems.",
     "My focus is on AI agents, automation systems, Retrieval-Augmented Generation (RAG), and full-stack AI applications.",
     "I enjoy taking products from idea to production — combining software engineering, system design, AI engineering, and modern deployment practices.",
-    "I don't just write code. I architect systems that think.",
+    "I don't just write code. I vibe with it — and architect systems that think.",
   ],
   photo: "/assets/balraj-photo.jpg",
 };
@@ -33,7 +34,7 @@ export const aboutData = {
 export const experienceData = [
   {
     id: "exp-001",
-    period: "2026.04 — 2026.08",
+    period: "2026.02 — 2026.05",
     company: "Bharat Unnati AI Fellowship",
     role: "AI Fellow",
     isActive: false,
