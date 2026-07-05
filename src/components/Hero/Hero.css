@@ -157,28 +157,21 @@
   z-index: 30;
 }
 
-.hero-terminal-header {
-  background: #14101e; /* dark-purple title bar */
-  padding: 8px 12px;
+.hero-terminal-header.windows-style {
+  background: #111116; /* slightly darker than body */
+  padding: 6px 12px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(168, 85, 247, 0.2);
 }
 
-.hero-terminal-controls {
-  display: flex;
-  gap: 6px;
-  margin-right: 12px;
+.hero-terminal-icon {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #a78bfa;
+  margin-right: 10px;
+  font-weight: bold;
 }
-
-.control {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-.control.red { background: #ff5f56; }
-.control.yellow { background: #ffbd2e; }
-.control.green { background: #27c93f; }
 
 .hero-terminal-title {
   font-family: var(--font-mono);
@@ -186,6 +179,19 @@
   color: #a78bfa;
   font-weight: 600;
   letter-spacing: 0.5px;
+  flex-grow: 1;
+}
+
+.hero-terminal-controls-win {
+  display: flex;
+  gap: 14px;
+  color: #64748b;
+  font-size: 0.7rem;
+  font-family: sans-serif;
+}
+.hero-terminal-controls-win span:hover {
+  color: #e2e8f0;
+  cursor: pointer;
 }
 
 .hero-terminal-body {

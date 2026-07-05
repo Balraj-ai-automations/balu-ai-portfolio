@@ -3,15 +3,15 @@ import { siteConfig } from '../../data/portfolio-data';
 import './BootSequence.css';
 
 const BOOT_LINES = [
-  { text: `BALU.AI — System v${siteConfig.version}`, dots: false },
+  { text: `Balraj.ai — System v${siteConfig.version}`, dots: false },
   { text: 'Initializing neural modules', dots: true },
   { text: 'Loading core identity', dots: true },
   { text: 'Mounting AI subsystems', dots: true },
   { text: 'Establishing secure connection', dots: true },
 ];
 
-const CHAR_DELAY = 18;
-const DOT_COUNT = 12;
+const CHAR_DELAY = 8;
+const DOT_COUNT = 8;
 const DOT_CHAR = '.';
 
 export default function BootSequence({ onComplete }) {
@@ -60,7 +60,7 @@ export default function BootSequence({ onComplete }) {
           // All lines done, start progress bar
           setShowProgress(true);
         }
-      }, 120);
+      }, 50);
     }
 
     return () => clearTimeout(timerRef.current);
@@ -72,12 +72,12 @@ export default function BootSequence({ onComplete }) {
 
     let current = 0;
     const interval = setInterval(() => {
-      current += 5;
+      current += 10;
       if (current > 100) current = 100;
       setProgress(current);
       if (current >= 100) {
         clearInterval(interval);
-        setTimeout(() => setShowStatus(true), 100);
+        setTimeout(() => setShowStatus(true), 50);
       }
     }, 10);
 
@@ -87,7 +87,7 @@ export default function BootSequence({ onComplete }) {
   // Show button after status
   useEffect(() => {
     if (!showStatus) return;
-    const t = setTimeout(() => setShowButton(true), 250);
+    const t = setTimeout(() => setShowButton(true), 100);
     return () => clearTimeout(t);
   }, [showStatus]);
 
@@ -172,7 +172,7 @@ export default function BootSequence({ onComplete }) {
               className={`boot-enter-btn${showButton ? ' visible' : ''}`}
               onClick={handleEnter}
               data-hover
-              aria-label="Enter BALU.AI system"
+              aria-label="Enter Balraj.ai system"
             >
               [ ENTER SYSTEM ]
             </button>

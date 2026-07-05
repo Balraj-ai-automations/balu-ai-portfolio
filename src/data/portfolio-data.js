@@ -1,5 +1,5 @@
 // ============================================================
-// BALU.AI — Portfolio Data
+// Balraj.ai — Portfolio Data
 // Edit this single file to update all content on the site.
 // ============================================================
 

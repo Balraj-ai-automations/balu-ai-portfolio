@@ -46,13 +46,14 @@ const TerminalWindow = ({ data, isActive, isCompleted, style }) => {
       animate={{ opacity: (isActive || isCompleted) ? 1 : 0.3, scale: (isActive || isCompleted) ? 1 : 0.95, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <div className="hero-terminal-header">
-        <div className="hero-terminal-controls">
-          <span className="control red"></span>
-          <span className="control yellow"></span>
-          <span className="control green"></span>
-        </div>
+      <div className="hero-terminal-header windows-style">
+        <div className="hero-terminal-icon">C:\&gt;</div>
         <div className="hero-terminal-title">{data.title}</div>
+        <div className="hero-terminal-controls-win">
+          <span>_</span>
+          <span>□</span>
+          <span>✕</span>
+        </div>
       </div>
       <div className="hero-terminal-body">
         <AnimatePresence>

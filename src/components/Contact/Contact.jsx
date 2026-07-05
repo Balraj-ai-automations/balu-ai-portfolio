@@ -34,7 +34,7 @@ export default function Contact() {
       
       if (!accessKey) {
         console.warn("Web3Forms Access Key is missing. Falling back to mailto.");
-        const subject = encodeURIComponent(`Message from ${formData.name} via BALU.AI`);
+        const subject = encodeURIComponent(`Message from ${formData.name} via Balraj.ai`);
         const body = encodeURIComponent(
           `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
         );
@@ -184,7 +184,7 @@ export default function Contact() {
                   animate={{ opacity: 1, y: 0 }}
                 >
                   <div>&gt; Message transmitted successfully.</div>
-                  <div>&gt; BALU.AI will respond within 24 hours.</div>
+                  <div>&gt; Balraj.ai will respond within 24 hours.</div>
                 </motion.div>
               )}
             </motion.div>
@@ -232,8 +232,10 @@ export default function Contact() {
             &gt; Session ending...
           </div>
           <div style={{ marginTop: '16px' }}>
-            © 2026 <span className="violet">BALU.AI</span> — Designed & Built by{' '}
+            © 2026 <span className="violet">Balraj.ai</span> — Designed & Built by{' '}
             <span className="violet">Balraj S</span>
+            <br />
+            <span style={{ fontSize: '0.8em', color: 'var(--text-muted)' }}>Location: Bangalore, India</span>
           </div>
         </div>
       </footer>
