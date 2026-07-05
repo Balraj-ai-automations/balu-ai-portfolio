@@ -38,44 +38,60 @@ export const experienceData = [
     company: "Bharat Unnati AI Fellowship",
     role: "AI Fellow",
     isActive: false,
-    mission:
-      "Building AI-powered applications and autonomous workflows using modern AI technologies.",
+    mission: "Learned basic prompt engineering, coding foundations, and automation using AI tools.",
     details: [
-      "Selected for an intensive AI fellowship focused on Programming, Generative AI, and Agentic AI.",
-      "Built AI-powered applications and autonomous workflows.",
-      "Learned practical AI engineering, prompt engineering, and agent development.",
-      "Collaborated on real-world AI projects and problem-solving initiatives.",
+      "Learned fundamental prompt engineering and basic coding skills.",
+      "Built automated workflows using n8n.",
+      "Explored and integrated AI productivity tools like Notion AI."
     ],
     systems: [
-      "Generative AI",
-      "Agentic AI",
       "Prompt Engineering",
-      "AI Agent Development",
+      "n8n",
+      "Automation",
+      "Notion AI"
     ],
   },
   {
     id: "exp-002",
     period: "2025 — 2026",
     company: "SDLC + AI",
-    role: "Product Development & SDLC Trainee",
+    role: "Product Development Trainee",
     isActive: false,
-    mission:
-      "Learned the complete Software Development Life Cycle from concept to production deployment.",
+    mission: "Learned how websites are built with AI using the 16 key pillars of the software development lifecycle.",
     details: [
-      "Practiced Requirement Gathering and Stakeholder Analysis.",
-      "Created Business Requirement Specifications (BRS) and Software Requirement Specifications (SRS).",
-      "Learned System Design, Architecture Design, and Database Design.",
-      "Studied Testing, Quality Assurance, Deployment, and Product Maintenance.",
+      "Studied the complete SDLC from requirement gathering to production deployment.",
+      "Learned to leverage AI tools at various stages of the development process.",
+      "Explored 16 key pillars of modern software and website development."
     ],
     systems: [
-      "BRS",
-      "SRS",
-      "System Design",
-      "Architecture",
-      "Testing",
-      "QA",
+      "SDLC",
+      "Requirement Gathering",
+      "Deployment",
+      "AI Integration"
     ],
   },
+  {
+    id: "exp-003",
+    period: "2026",
+    company: "IKIGAI",
+    role: "AI Automation Intern",
+    isActive: false,
+    mission: "Built practical automation and knowledge-management workflows using AI-assisted development tools.",
+    details: [
+      "Used Claude Code in a cowork setup to delegate development and automation tasks.",
+      "Structured prompts and task breakdowns for reliable multi-step execution by AI agents.",
+      "Connected Excalidraw for visual planning (architecture sketches) with Obsidian for structured knowledge management.",
+      "Built automation pipelines using Python, n8n, and LangGraph for industrial workflows."
+    ],
+    systems: [
+      "Claude Code",
+      "n8n",
+      "LangGraph",
+      "Python",
+      "Excalidraw",
+      "Obsidian"
+    ],
+  }
 ];
 
 export const projectsData = [
