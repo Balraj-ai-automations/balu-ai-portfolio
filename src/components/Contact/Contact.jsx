@@ -8,6 +8,8 @@ export default function Contact() {
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [headerTyped, setHeaderTyped] = useState(false);
 
   useEffect(() => {
@@ -21,16 +23,56 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // mailto fallback
-    const subject = encodeURIComponent(`Message from ${formData.name} via BALU.AI`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
-    window.open(`mailto:balrajsrinivas03@gmail.com?subject=${subject}&body=${body}`);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setLoading(true);
+    setError(false);
+    setSubmitted(false);
+
+    try {
+      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+      
+      if (!accessKey) {
+        console.warn("Web3Forms Access Key is missing. Falling back to mailto.");
+        const subject = encodeURIComponent(`Message from ${formData.name} via BALU.AI`);
+        const body = encodeURIComponent(
+          `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+        );
+        window.open(`mailto:balrajsrinivas03@gmail.com?subject=${subject}&body=${body}`);
+        setSubmitted(true);
+        setLoading(false);
+        setTimeout(() => setSubmitted(false), 5000);
+        return;
+      }
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setError(true);
+      }
+    } catch (err) {
+      console.error(err);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -118,10 +160,22 @@ export default function Contact() {
                   />
                 </div>
 
-                <button type="submit" className="transmit-btn" data-hover>
-                  TRANSMIT <span className="icon">📡</span>
+                <button type="submit" className="transmit-btn" disabled={loading} data-hover>
+                  {loading ? 'TRANSMITTING...' : 'TRANSMIT'} <span className="icon">📡</span>
                 </button>
               </form>
+
+              {error && (
+                <motion.div
+                  className="transmit-error"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  style={{ color: '#ef4444', marginTop: '16px', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}
+                >
+                  <div>&gt; ERR_TRANSMISSION_FAILED: Connection lost.</div>
+                  <div>&gt; Please check terminal settings or try again.</div>
+                </motion.div>
+              )}
 
               {submitted && (
                 <motion.div

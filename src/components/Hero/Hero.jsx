@@ -1,251 +1,165 @@
-import { useRef, useMemo, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import * as THREE from 'three';
-import { motion } from 'framer-motion';
-import { siteConfig } from '../../data/portfolio-data';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { siteConfig, heroTerminalsData } from '../../data/portfolio-data';
 import './Hero.css';
 
-/* ── Mouse tracker (shared state via R3F) ── */
-function useMousePosition() {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+// Component for an individual terminal window
+const TerminalWindow = ({ data, isActive, isCompleted, style }) => {
+  const [typedLines, setTypedLines] = useState(0);
 
   useEffect(() => {
-    const handleMove = (e) => {
-      setMouse({
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: -(e.clientY / window.innerHeight) * 2 + 1,
-      });
-    };
-    window.addEventListener('mousemove', handleMove);
-    return () => window.removeEventListener('mousemove', handleMove);
-  }, []);
+    if (isActive && !isCompleted) {
+      let currentLine = 0;
+      
+      const typeNextLine = () => {
+        if (currentLine < data.commands.length) {
+          setTypedLines(currentLine + 1);
+          currentLine++;
+          
+          // Determine delay based on command type (simulate realistic typing vs output)
+          const cmd = data.commands[currentLine - 1];
+          let delay = 100; // default for output
+          if (cmd.type === 'cmd') delay = 400 + Math.random() * 400;
+          if (cmd.type === 'success') delay = 200;
+          if (cmd.type === 'ascii') delay = 600;
 
-  return mouse;
-}
-
-/* ── Glowing Wireframe Cube ── */
-function GlassCube({ mouse }) {
-  const groupRef = useRef();
-  const targetRotation = useRef({ x: 0, y: 0 });
-
-  // Create edges geometry from a box
-  const edgesGeo = useMemo(() => {
-    const box = new THREE.BoxGeometry(2.8, 2.8, 2.8);
-    return new THREE.EdgesGeometry(box);
-  }, []);
-
-  useFrame((_, delta) => {
-    if (!groupRef.current) return;
-
-    // Map mouse position to target rotation
-    targetRotation.current.y = mouse.x * Math.PI * 0.4;
-    targetRotation.current.x = mouse.y * Math.PI * 0.3;
-
-    // Smooth lerp towards target + slow baseline auto-rotation
-    groupRef.current.rotation.y +=
-      (targetRotation.current.y - groupRef.current.rotation.y) * 0.05 +
-      delta * 0.15;
-    groupRef.current.rotation.x +=
-      (targetRotation.current.x - groupRef.current.rotation.x) * 0.05;
-  });
-
-  return (
-    <group ref={groupRef}>
-      {/* Main visible edges — bright violet */}
-      <lineSegments geometry={edgesGeo}>
-        <lineBasicMaterial
-          color="#7c3aed"
-          linewidth={1}
-          transparent
-          opacity={0.9}
-        />
-      </lineSegments>
-
-      {/* Glow layer — slightly larger, more transparent */}
-      <lineSegments geometry={edgesGeo} scale={1.01}>
-        <lineBasicMaterial
-          color="#a78bfa"
-          linewidth={1}
-          transparent
-          opacity={0.3}
-          blending={THREE.AdditiveBlending}
-        />
-      </lineSegments>
-
-      {/* Inner ambient glow — subtle face fill */}
-      <mesh>
-        <boxGeometry args={[2.78, 2.78, 2.78]} />
-        <meshBasicMaterial
-          color="#7c3aed"
-          transparent
-          opacity={0.03}
-          side={THREE.DoubleSide}
-        />
-      </mesh>
-    </group>
-  );
-}
-
-/* ── Particle Field — Deep Violet Only ── */
-function ParticleField({ count = 400 }) {
-  const pointsRef = useRef();
-
-  const { positions, colors, velocities } = useMemo(() => {
-    const positions = new Float32Array(count * 3);
-    const colors = new Float32Array(count * 3);
-    const velocities = new Float32Array(count * 3);
-
-    // Deep violet range ONLY — no white/light tones
-    const deepViolet = new THREE.Color('#5b21b6');
-    const violet = new THREE.Color('#7c3aed');
-
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
-
-      // Random position in a wide box
-      positions[i3] = (Math.random() - 0.5) * 22;
-      positions[i3 + 1] = (Math.random() - 0.5) * 22;
-      positions[i3 + 2] = (Math.random() - 0.5) * 14;
-
-      // Deep violet to violet — NO light/white colors
-      const t = Math.random();
-      const color = deepViolet.clone().lerp(violet, t);
-      colors[i3] = color.r;
-      colors[i3 + 1] = color.g;
-      colors[i3 + 2] = color.b;
-
-      // Slow drift
-      velocities[i3] = (Math.random() - 0.5) * 0.003;
-      velocities[i3 + 1] = 0.002 + Math.random() * 0.004;
-      velocities[i3 + 2] = (Math.random() - 0.5) * 0.002;
-    }
-
-    return { positions, colors, velocities };
-  }, [count]);
-
-  useFrame(({ clock }) => {
-    if (!pointsRef.current) return;
-    const posAttr = pointsRef.current.geometry.attributes.position;
-    const time = clock.getElapsedTime();
-
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
-
-      posAttr.array[i3] += velocities[i3] + Math.sin(time * 0.5 + i) * 0.001;
-      posAttr.array[i3 + 1] += velocities[i3 + 1];
-      posAttr.array[i3 + 2] += velocities[i3 + 2];
-
-      // Wrap around
-      if (posAttr.array[i3 + 1] > 11) posAttr.array[i3 + 1] = -11;
-      if (posAttr.array[i3] > 11) posAttr.array[i3] = -11;
-      if (posAttr.array[i3] < -11) posAttr.array[i3] = 11;
-    }
-
-    posAttr.needsUpdate = true;
-  });
-
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-          count={count}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          args={[colors, 3]}
-          count={count}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={2.5}
-        vertexColors
-        transparent
-        opacity={0.5}
-        sizeAttenuation
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
-  );
-}
-
-/* ── Scene (wraps cube + particles inside Canvas) ── */
-function Scene({ mouse }) {
-  return (
-    <>
-      <GlassCube mouse={mouse} />
-      <ParticleField count={400} />
-    </>
-  );
-}
-
-/* ── Typewriter hook ── */
-function useTypewriter(text, speed = 60, startDelay = 800) {
-  const [displayText, setDisplayText] = useState('');
-  const [isDone, setIsDone] = useState(false);
-
-  useEffect(() => {
-    let index = 0;
-    let timer;
-
-    const delayTimer = setTimeout(() => {
-      timer = setInterval(() => {
-        index++;
-        setDisplayText(text.slice(0, index));
-        if (index >= text.length) {
-          clearInterval(timer);
-          setIsDone(true);
+          setTimeout(typeNextLine, delay);
         }
-      }, speed);
-    }, startDelay);
+      };
+      
+      // Start typing slightly after activation
+      const timer = setTimeout(typeNextLine, 300);
+      return () => clearTimeout(timer);
+    } else if (isCompleted) {
+      setTypedLines(data.commands.length);
+    }
+  }, [isActive, isCompleted, data.commands.length]);
 
-    return () => {
-      clearTimeout(delayTimer);
-      if (timer) clearInterval(timer);
-    };
-  }, [text, speed, startDelay]);
+  // Determine if it should have the strong green glow (Final Status)
+  const isFinalStatus = data.id === 12;
 
-  return { displayText, isDone };
-}
+  return (
+    <motion.div 
+      className={`hero-terminal ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''} ${isFinalStatus && isCompleted ? 'final-status' : ''}`}
+      style={style}
+      initial={{ opacity: 0, scale: 0.9, y: 10 }}
+      animate={{ opacity: (isActive || isCompleted) ? 1 : 0.3, scale: (isActive || isCompleted) ? 1 : 0.95, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
+      <div className="hero-terminal-header">
+        <div className="hero-terminal-controls">
+          <span className="control red"></span>
+          <span className="control yellow"></span>
+          <span className="control green"></span>
+        </div>
+        <div className="hero-terminal-title">{data.title}</div>
+      </div>
+      <div className="hero-terminal-body">
+        <AnimatePresence>
+          {data.commands.slice(0, typedLines).map((cmd, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, x: -5 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2 }}
+              className={`cmd-line type-${cmd.type}`}
+            >
+              {cmd.type === 'cmd' && (
+                <span className="cmd-prompt">{cmd.env || 'balraj@MacBook-Pro ai-portfolio %'} </span>
+              )}
+              {cmd.type === 'link' ? (
+                <a href={cmd.url} target="_blank" rel="noopener noreferrer">{cmd.text}</a>
+              ) : (
+                <span>{cmd.text}</span>
+              )}
+            </motion.div>
+          ))}
+        </AnimatePresence>
+        {isActive && !isCompleted && <div className="cmd-cursor"></div>}
+      </div>
+    </motion.div>
+  );
+};
 
-/* ── Hero Component ── */
+// Main Hero Component
 export default function Hero() {
-  const { displayText, isDone } = useTypewriter(siteConfig.tagline, 45, 800);
-  const mouse = useMousePosition();
+  const [activeTerminal, setActiveTerminal] = useState(1);
+  const totalTerminals = heroTerminalsData.length;
+
+  useEffect(() => {
+    if (activeTerminal <= totalTerminals) {
+      // Calculate how long this terminal should be active before moving to the next
+      const currentTerminalData = heroTerminalsData[activeTerminal - 1];
+      
+      // Rough estimation of time: 100ms per output, 600ms per command, plus some buffer
+      let timeNeeded = 800; // Base buffer
+      currentTerminalData.commands.forEach(cmd => {
+        if (cmd.type === 'cmd') timeNeeded += 600;
+        else if (cmd.type === 'ascii') timeNeeded += 600;
+        else timeNeeded += 150;
+      });
+
+      const timer = setTimeout(() => {
+        if (activeTerminal < totalTerminals) {
+          setActiveTerminal(prev => prev + 1);
+        }
+      }, timeNeeded);
+
+      return () => clearTimeout(timer);
+    }
+  }, [activeTerminal, totalTerminals]);
+
+  // Desktop positions for the cinematic scattered layout
+  const terminalPositions = [
+    { top: '8%', left: '4%' },           // 01
+    { top: '4%', left: '38%' },          // 02
+    { top: '8%', right: '4%' },          // 03
+    { top: '28%', left: '8%' },          // 04
+    { top: '25%', right: '8%' },         // 05
+    { top: '55%', left: '5%' },          // 06
+    { top: '65%', left: '30%' },         // 07
+    { top: '60%', right: '35%' },        // 08
+    { bottom: '12%', left: '2%' },       // 09
+    { bottom: '6%', left: '26%' },       // 10
+    { bottom: '12%', right: '28%' },     // 11
+    { bottom: '6%', right: '2%' }        // 12
+  ];
 
   return (
     <section id="hero" className="hero-section">
-      {/* Three.js Canvas background */}
-      <div className="hero-canvas">
-        <Canvas
-          camera={{ position: [0, 0, 8], fov: 60 }}
-          dpr={[1, 1.5]}
-          gl={{ antialias: true, alpha: true }}
-          style={{ background: 'transparent' }}
+      {/* Central Identity Area */}
+      <div className="hero-center-identity">
+        {/* Wireframe background object */}
+        <div className="hero-wireframe-bg"></div>
+        
+        <motion.div
+          className="hero-content"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
         >
-          <Scene mouse={mouse} />
-        </Canvas>
+          <h1 className="hero-name">{siteConfig.name}</h1>
+          <p className="hero-tagline">{siteConfig.tagline}</p>
+        </motion.div>
       </div>
 
-      {/* HTML overlay */}
-      <div className="hero-overlay">
-        <div className="hero-content">
-          <motion.h1
-            className="hero-name"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-          >
-            {siteConfig.name}
-          </motion.h1>
+      {/* Terminal Workflow Grid (Desktop Absolute / Mobile Vertical) */}
+      <div className="hero-terminals-container">
+        {/* SVG Connectors - Optional enhancement: draw lines between terminals based on active state */}
+        <svg className="workflow-connectors" preserveAspectRatio="none">
+           {/* Abstract circuitry paths will be handled in CSS via glowing borders and backgrounds to keep it performant and responsive, but we can add subtle SVG lines here if needed. */}
+           <path d="M 10 10 Q 50 10, 50 50" stroke="rgba(168, 85, 247, 0.2)" fill="none" strokeWidth="1"/>
+        </svg>
 
-          <p className="hero-tagline">
-            {displayText}
-            {!isDone && <span className="typing-cursor" />}
-          </p>
-        </div>
+        {heroTerminalsData.map((term, index) => (
+          <TerminalWindow 
+            key={term.id} 
+            data={term} 
+            isActive={activeTerminal === term.id} 
+            isCompleted={activeTerminal > term.id}
+            style={terminalPositions[index]}
+          />
+        ))}
       </div>
 
       {/* Scroll indicator */}

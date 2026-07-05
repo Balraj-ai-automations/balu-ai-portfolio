@@ -1,129 +1,368 @@
 /* ============================================================
-   Hero — Full viewport with R3F particle background
+   HERO SECTION — 12 Terminal Workflow Redesign
    ============================================================ */
 
 .hero-section {
   position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  background-color: var(--bg-primary);
-}
-
-/* Three.js Canvas sits behind everything */
-.hero-canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-/* HTML overlay on top of canvas */
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+  min-height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  pointer-events: none;
+  align-items: center;
+  overflow: hidden;
+  background-color: #030305; /* Black futuristic background */
+  background-image: 
+    linear-gradient(to right, rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-.hero-content {
-  text-align: center;
-  pointer-events: auto;
-}
-
-/* Name heading */
-.hero-name {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 8vw, 5rem);
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: 4px;
-  text-shadow:
-    0 0 20px var(--accent-glow),
-    0 0 40px rgba(124, 58, 237, 0.15),
-    0 0 80px rgba(124, 58, 237, 0.05);
-  margin-bottom: 20px;
-  line-height: 1.1;
-}
-
-/* Tagline with typewriter */
-.hero-tagline {
-  font-family: var(--font-mono);
-  font-size: clamp(0.8rem, 1.8vw, 1.1rem);
-  color: var(--text-secondary);
-  letter-spacing: 1px;
-  min-height: 1.6em;
-  display: inline-block;
-}
-
-.hero-tagline .typing-cursor {
-  display: inline-block;
-  width: 2px;
-  height: 1.1em;
-  background: var(--accent);
-  margin-left: 2px;
-  vertical-align: middle;
-  animation: blink 0.8s step-end infinite;
-}
-
-/* Scroll indicator */
-.hero-scroll-indicator {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  text-align: center;
-  pointer-events: none;
-}
-
-.hero-scroll-text {
-  font-family: var(--font-display);
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  letter-spacing: 3px;
-  animation: bounce-scroll 2s ease-in-out infinite;
-}
-
-@keyframes bounce-scroll {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-8px);
-  }
-  60% {
-    transform: translateY(-4px);
-  }
-}
-
-/* Subtle gradient overlay at bottom for depth */
+/* Subtle vignette */
 .hero-section::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  background: linear-gradient(to top, var(--bg-primary), transparent);
-  z-index: 1;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at center, transparent 30%, #030305 90%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Central Identity ── */
+.hero-center-identity {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50; /* Must remain above terminals */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
   pointer-events: none;
 }
 
-/* Mobile */
+.hero-wireframe-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 300px;
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: 50%;
+  box-shadow: inset 0 0 40px rgba(168, 85, 247, 0.05);
+  z-index: -1;
+  /* Simulating a subtle 3D wireframe using CSS */
+  background: 
+    repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(168, 85, 247, 0.05) 10px, rgba(168, 85, 247, 0.05) 11px),
+    repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(168, 85, 247, 0.05) 20px, rgba(168, 85, 247, 0.05) 21px);
+  animation: rotateWireframe 60s linear infinite;
+}
+
+@keyframes rotateWireframe {
+  from { transform: translate(-50%, -50%) rotate(0deg) scale(1) perspective(1000px) rotateX(60deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg) scale(1) perspective(1000px) rotateX(60deg); }
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.15em;
+  margin: 0;
+  line-height: 1.1;
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 40px rgba(168, 85, 247, 0.2);
+}
+
+.hero-tagline {
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 1.5vw, 1.1rem);
+  color: #a78bfa; /* subtle purple/gray */
+  letter-spacing: 2px;
+  margin-top: 1rem;
+  font-weight: 400;
+  max-width: 90%;
+}
+
+/* ── Terminals Container ── */
+.hero-terminals-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+}
+
+.workflow-connectors {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ── macOS Terminal Window ── */
+.hero-terminal {
+  position: absolute;
+  width: 280px;
+  background: #09090b; /* near-black */
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(168, 85, 247, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  pointer-events: auto;
+}
+
+/* Float animation for terminals */
+.hero-terminal {
+  animation: float-terminal 6s ease-in-out infinite alternate;
+}
+
+.hero-terminal:nth-child(even) {
+  animation-delay: -3s;
+  animation-duration: 7s;
+}
+
+@keyframes float-terminal {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-8px); }
+}
+
+.hero-terminal.active {
+  border: 1px solid rgba(168, 85, 247, 0.8);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 25px rgba(168, 85, 247, 0.3);
+  z-index: 25;
+}
+
+.hero-terminal.completed {
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+  opacity: 0.6 !important;
+}
+
+.hero-terminal.final-status {
+  border: 1px solid rgba(34, 197, 94, 0.8) !important;
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.4) !important;
+  opacity: 1 !important;
+  z-index: 30;
+}
+
+.hero-terminal-header {
+  background: #14101e; /* dark-purple title bar */
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.hero-terminal-controls {
+  display: flex;
+  gap: 6px;
+  margin-right: 12px;
+}
+
+.control {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.control.red { background: #ff5f56; }
+.control.yellow { background: #ffbd2e; }
+.control.green { background: #27c93f; }
+
+.hero-terminal-title {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #a78bfa;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.hero-terminal-body {
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: #e2e8f0; /* off-white/gray */
+  min-height: 80px;
+  max-height: 200px;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cmd-line {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.cmd-line.type-cmd {
+  color: #d1d5db; /* light gray */
+}
+
+.cmd-prompt {
+  color: #c084fc;
+}
+
+.cmd-line.type-output {
+  color: #94a3b8; /* darker gray for output */
+  padding-left: 8px;
+}
+
+.cmd-line.type-success {
+  color: #22c55e; /* terminal green */
+  font-weight: 600;
+  margin-top: 4px;
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+}
+
+.cmd-line.type-link a {
+  color: #06b6d4; /* cyan */
+  text-decoration: underline;
+}
+
+.cmd-line.type-ascii {
+  color: #22c55e;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 5px;
+  text-align: center;
+  margin: 10px 0;
+  text-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+}
+
+.cmd-line.type-status {
+  margin-top: 10px;
+  color: #22c55e;
+  font-weight: 700;
+  border-top: 1px dashed rgba(34, 197, 94, 0.3);
+  padding-top: 8px;
+}
+
+.cmd-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 12px;
+  background: #c084fc;
+  animation: blink 1s step-end infinite;
+  margin-left: 4px;
+}
+
+/* ── Scroll Indicator ── */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  text-align: center;
+}
+
+.hero-scroll-text {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 3px;
+  animation: bounce 2s infinite;
+  display: inline-block;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  60% { transform: translateY(-4px); }
+}
+
+/* ── Responsive Behavior ── */
+@media (max-width: 1200px) {
+  .hero-terminal { width: 240px; }
+  .hero-terminal-body { font-size: 0.65rem; }
+}
+
+@media (max-width: 900px) {
+  .hero-terminal { width: 220px; }
+  .hero-name { font-size: 3.5rem; }
+}
+
+/* Mobile & Tablet Portrait: Vertical Stack Layout */
 @media (max-width: 768px) {
-  .hero-name {
-    letter-spacing: 2px;
+  .hero-section {
+    height: auto;
+    min-height: 100vh;
+    padding-top: 120px;
+    padding-bottom: 100px;
+    overflow-y: auto;
+    align-items: flex-start;
+  }
+
+  .hero-center-identity {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: 0 auto 60px auto;
+    width: 100%;
+    z-index: 50;
+  }
+  
+  .hero-wireframe-bg {
+    width: 300px;
+    height: 150px;
+  }
+
+  .hero-terminals-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    height: auto;
+    width: 100%;
+  }
+
+  /* Override absolute positioning for vertical flow */
+  .hero-terminal {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 90% !important;
+    max-width: 400px;
+  }
+
+  /* Add vertical connection line behind terminals */
+  .hero-terminals-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: rgba(168, 85, 247, 0.3);
+    transform: translateX(-50%);
+    z-index: -1;
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+  }
+
+  .workflow-connectors {
+    display: none; /* Hide SVG desktop lines on mobile */
   }
 
   .hero-scroll-indicator {
-    bottom: 24px;
-  }
-
-  .hero-scroll-text {
-    font-size: 0.55rem;
+    position: relative;
+    bottom: 0;
+    margin-top: 60px;
   }
 }

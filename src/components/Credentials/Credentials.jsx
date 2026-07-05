@@ -156,12 +156,23 @@ export default function Credentials() {
           </button>
           {modalImage && (
             <>
-              <img
-                src={modalImage}
-                alt={modalTitle}
-                className="credentials__modal-image"
-                loading="lazy"
-              />
+              {modalImage.endsWith('.pdf') ? (
+                <object
+                  data={modalImage}
+                  type="application/pdf"
+                  className="credentials__modal-image"
+                  style={{ minHeight: '60vh', width: '100%', background: '#fff' }}
+                >
+                  <p>Your browser does not support PDFs. <a href={modalImage}>Download the PDF</a>.</p>
+                </object>
+              ) : (
+                <img
+                  src={modalImage}
+                  alt={modalTitle}
+                  className="credentials__modal-image"
+                  loading="lazy"
+                />
+              )}
               <p className="credentials__modal-title">{modalTitle}</p>
             </>
           )}

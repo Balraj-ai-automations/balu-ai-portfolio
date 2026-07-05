@@ -56,7 +56,7 @@ export const experienceData = [
   {
     id: "exp-002",
     period: "2025 — 2026",
-    company: "SDLC with Zero Coding Program",
+    company: "SDLC + AI",
     role: "Product Development & SDLC Trainee",
     isActive: false,
     mission:
@@ -210,6 +210,12 @@ export const credentialsData = {
       year: "2026",
       image: "/assets/certificate-bharat-unnati.jpg",
     },
+    {
+      name: "SDLC + AI",
+      issuer: "ExpertPedia",
+      year: "2026",
+      image: "/assets/certificate-sdlc-ai.pdf",
+    },
     // ADD FUTURE CERTIFICATIONS HERE:
     // {
     //   name: "Certificate Name",
@@ -263,3 +269,157 @@ export const interestsData = [
 
 export const careerGoal =
   "Aspiring AI Engineer focused on building AI agents, intelligent automation systems, and production-ready AI products. Interested in creating scalable solutions that combine software engineering with modern AI technologies.";
+
+export const heroTerminalsData = [
+  {
+    id: 1,
+    title: "01. Project Init",
+    commands: [
+      { text: "mkdir ai-portfolio", type: "cmd" },
+      { text: "cd ai-portfolio", type: "cmd" },
+      { text: "code .", type: "cmd" },
+      { text: "✓ Project initialized", type: "success" }
+    ]
+  },
+  {
+    id: 2,
+    title: "02. Create Structure",
+    commands: [
+      { text: "tree -L 2", type: "cmd" },
+      { text: "ai-portfolio/", type: "output" },
+      { text: "├── app/", type: "output" },
+      { text: "├── tests/", type: "output" },
+      { text: "├── config/", type: "output" },
+      { text: "├── .env", type: "output" },
+      { text: "├── requirements.txt", type: "output" },
+      { text: "└── README.md", type: "output" },
+      { text: "✓ Folder structure created", type: "success" }
+    ]
+  },
+  {
+    id: 3,
+    title: "03. Virtual Environment",
+    commands: [
+      { text: "python3 -m venv venv", type: "cmd" },
+      { text: "source venv/bin/activate", type: "cmd" },
+      { text: "python --version", type: "cmd", env: "(venv)" },
+      { text: "Python 3.11.7", type: "output" },
+      { text: "✓ Virtual environment ready", type: "success" }
+    ]
+  },
+  {
+    id: 4,
+    title: "04. Install Dependencies",
+    commands: [
+      { text: "pip install -r requirements.txt", type: "cmd", env: "(venv)" },
+      { text: "Collecting fastapi==0.104.1", type: "output" },
+      { text: "Collecting uvicorn==0.24.0", type: "output" },
+      { text: "Collecting langchain==0.1.16", type: "output" },
+      { text: "Collecting langgraph==0.2.34", type: "output" },
+      { text: "Collecting mistralai==2.5.0", type: "output" },
+      { text: "Collecting supabase==2.4.1", type: "output" },
+      { text: "Collecting python-dotenv==1.0.0", type: "output" },
+      { text: "Collecting pydantic==2.5.3", type: "output" },
+      { text: "✓ All dependencies installed", type: "success" }
+    ]
+  },
+  {
+    id: 5,
+    title: "05. Environment Config",
+    commands: [
+      { text: "cat .env", type: "cmd", env: "(venv)" },
+      { text: "SUPABASE_URL=****************", type: "output" },
+      { text: "SUPABASE_KEY=****************", type: "output" },
+      { text: "MISTRAL_API_KEY=*************", type: "output" },
+      { text: "HUGGINGFACE_TOKEN=***********", type: "output" },
+      { text: "✓ Environment variables loaded", type: "success" }
+    ]
+  },
+  {
+    id: 6,
+    title: "06. Run Backend",
+    commands: [
+      { text: "uvicorn app.main:app --reload", type: "cmd", env: "(venv)" },
+      { text: "INFO: Uvicorn running on http://127.0.0.1:8000", type: "output" },
+      { text: "INFO: Started reloader process", type: "output" },
+      { text: "INFO: Application startup complete.", type: "output" },
+      { text: "✓ Backend is running", type: "success" }
+    ]
+  },
+  {
+    id: 7,
+    title: "07. Run Tests",
+    commands: [
+      { text: "pytest", type: "cmd", env: "(venv)" },
+      { text: "================ test session starts ================", type: "output" },
+      { text: "collected 24 items", type: "output" },
+      { text: "........................ [100%]", type: "output" },
+      { text: "================ 24 passed in 1.28s =================", type: "output" },
+      { text: "✓ All tests passed", type: "success" }
+    ]
+  },
+  {
+    id: 8,
+    title: "08. Git Init & Commit",
+    commands: [
+      { text: "git init", type: "cmd" },
+      { text: "git add .", type: "cmd" },
+      { text: 'git commit -m "Initial commit"', type: "cmd" },
+      { text: "[main (root-commit) ab12c3d] Initial commit", type: "output" },
+      { text: "27 files changed, 1024 insertions(+)", type: "output" },
+      { text: "✓ Code committed", type: "success" }
+    ]
+  },
+  {
+    id: 9,
+    title: "09. Push to GitHub",
+    commands: [
+      { text: "git branch -M main", type: "cmd" },
+      { text: "git remote add origin github.com/balraj/ai-portfolio.git", type: "cmd" },
+      { text: "git push -u origin main", type: "cmd" },
+      { text: "Enumerating objects: 27, done.", type: "output" },
+      { text: "Counting objects: 100% (27/27), done.", type: "output" },
+      { text: "Writing objects: 100%", type: "output" },
+      { text: "✓ Pushed to GitHub", type: "success" }
+    ]
+  },
+  {
+    id: 10,
+    title: "10. Build Project",
+    commands: [
+      { text: "npm run build", type: "cmd" },
+      { text: "> build", type: "output" },
+      { text: "> vite build", type: "output" },
+      { text: "vite v5.0.0 building for production...", type: "output" },
+      { text: "✓ 132 modules transformed.", type: "output" },
+      { text: "dist/index.html", type: "output" },
+      { text: "dist/assets/index-8f3d.js", type: "output" },
+      { text: "✓ Build completed", type: "success" }
+    ]
+  },
+  {
+    id: 11,
+    title: "11. Deploy to Production",
+    commands: [
+      { text: "vercel --prod", type: "cmd" },
+      { text: "Vercel CLI", type: "output" },
+      { text: "Deploying to production...", type: "output" },
+      { text: "Uploading [==========] 100%", type: "output" },
+      { text: "Production: balu-ai-portfolio.vercel.app", type: "link", url: "https://balu-ai-portfolio.vercel.app" },
+      { text: "✓ Deployment successful", type: "success" },
+      { text: "✓ Project is LIVE", type: "success" }
+    ]
+  },
+  {
+    id: 12,
+    title: "12. Final Status",
+    commands: [
+      { text: "SUCCESS", type: "ascii" },
+      { text: "✓ Build completed", type: "success" },
+      { text: "✓ Tests passed", type: "success" },
+      { text: "✓ Pushed to main", type: "success" },
+      { text: "✓ Production deployed", type: "success" },
+      { text: "STATUS: ONLINE", type: "status" }
+    ]
+  }
+];
