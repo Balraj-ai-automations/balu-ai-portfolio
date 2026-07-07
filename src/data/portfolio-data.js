@@ -137,6 +137,39 @@ export const projectsData = [
       github: "https://github.com/Balraj-ai-automations/decoda",
     },
   },
+  {
+    id: "mission-002",
+    codename: "BRIEFAI",
+    title: "BriefAI",
+    subtitle: "AI Marketing Assistant",
+    objective: "Empower Indian small businesses with automated product descriptions and social media marketing copy.",
+    complexity: 80,
+    status: "DEPLOYED",
+    stack: [
+      "AI Agents",
+      "n8n",
+      "LangGraph",
+      "Python",
+      "WhatsApp API"
+    ],
+    highlights: [
+      "Built automated AI marketing copy generation pipelines.",
+      "Integrated directly with WhatsApp and Instagram for publishing.",
+      "Implemented intelligent guardrails for tone and output quality.",
+      "Generated product images dynamically."
+    ],
+    features: [
+      "Product Descriptions",
+      "WhatsApp Marketing Copy",
+      "Instagram Captions",
+      "AI-Generated Product Images",
+      "Direct Social Publishing"
+    ],
+    links: {
+      demo: "#",
+      github: "https://github.com/Balraj-ai-automations",
+    },
+  },
   // ──────────────────────────────────────────────
   // ADD FUTURE PROJECTS BELOW — Copy the template:
   // ──────────────────────────────────────────────
