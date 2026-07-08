@@ -166,7 +166,7 @@ export const projectsData = [
       "Direct Social Publishing"
     ],
     links: {
-      demo: "#",
+      demo: "https://brief-ai-three.vercel.app/",
       github: "https://github.com/Balraj-ai-automations",
     },
   },
