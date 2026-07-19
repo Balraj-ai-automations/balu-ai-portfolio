@@ -54,7 +54,7 @@ export default function HeroProjectStatus({ buildState }) {
                   style={{ 
                     animationDelay: `\${delay}s`,
                     width: '4px',
-                    backgroundColor: isComplete ? '#1e1e24' : '#a855f7',
+                    backgroundColor: isComplete ? '#1e1e24' : '#ffffff',
                     minHeight: '4px',
                     display: 'block'
                   }}

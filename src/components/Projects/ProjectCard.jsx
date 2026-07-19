@@ -123,7 +123,7 @@ export default function ProjectCard({ project, index }) {
         <div className="project-card__field project-card__status">
           <span className="project-card__field-label">STATUS:</span>
           <span className="project-card__status-badge">
-            ✅ {project.status}
+            {project.status}
           </span>
         </div>
 
